@@ -1,6 +1,6 @@
 # tearzz.lua
-Small Lua scripts for many purposes
+Small Lua scripts that I use
 
 |  Filename | LoC | Description |
 |-----------|-----|-------------|
-| **[markdown.lua](markdown.lua)** | 48 | markdown to html |
+| **[markdown.lua](markdown.lua)** | 43 | an opinionated markdown to html converter |
