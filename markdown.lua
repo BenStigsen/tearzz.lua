@@ -9,7 +9,7 @@
 
 if #arg < 2 then
     print("You need to supply two arguments")
-    print("lumen <file_to_convert> <file_to_output>")
+    print("markdown.lua <file_to_convert> <file_to_output>")
     os.exit(1)
 end
 
