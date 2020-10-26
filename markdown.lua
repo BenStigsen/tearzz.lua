@@ -14,7 +14,7 @@ if #arg < 2 then
 end
 
 replacements = {
-    {"\r\n",                "\n"},
+    {"\r\n"                 , "\n"},
 
     -- Horizontal line
     {"\n\n(%-%-%-+%s+)"     , "\n\n<hr>\n\n"},
