@@ -14,49 +14,49 @@ if #arg < 2 then
 end
 
 replacements = {
-	{
-		-- String
-		{
-			"%b\"\"",
-			"%b''",
-		},
-		"<span class=\"string\">%0</span>"
-	},
-	{
-		-- Comment
-		{
-			-- Block
-			"/%*.-%*/",
-			"%-%-%[%[.-%-%-%]%]",
+    {
+        -- String
+        {
+            "%b\"\"",
+            "%b''",
+        },
+        "<span class=\"string\">%0</span>"
+    },
+    {
+        -- Comment
+        {
+            -- Block
+            "/%*.-%*/",
+            "%-%-%[%[.-%-%-%]%]",
 
-			-- Single
-			"//[^\n]-\n",
-			"#[^\n]-\n",
-			"[^>]%-%-[^\n]-\n",
-		},
-		"<span class=\"comment\">%0</span>"
-	},
-	{
-		-- Function
-		{
-			"(%w+)(%s+%*?[_%w%d]-%()",
-		},
-		"<span class=\"function\">%1</span>%2"
-	},
-	{
-		-- Functioncall
-		{
-			"(%w+)%(",
-		},
-		"<span class=\"call\">%1</span>("
-	},
-	{
-		-- Number
-		{
-			"%d%d-%.?%d%d-[^%d]",
-		},
-		"<span class=\"number\">%0</span>"
-	}
+            -- Single
+            "//[^\n]-\n",
+            "#[^\n]-\n",
+            "[^>]%-%-[^\n]-\n",
+        },
+        "<span class=\"comment\">%0</span>"
+    },
+    {
+        -- Function
+        {
+            "(%w+)(%s+%*?[_%w%d]-%()",
+        },
+        "<span class=\"function\">%1</span>%2"
+    },
+    {
+        -- Functioncall
+        {
+            "(%w+)%(",
+        },
+        "<span class=\"call\">%1</span>("
+    },
+    {
+        -- Number
+        {
+            "%d%d-%.?%d%d-[^%d]",
+        },
+        "<span class=\"number\">%0</span>"
+    }
 }
 
 file_in = io.open(arg[1], "r")
@@ -64,9 +64,9 @@ content = file_in:read("*a")
 file_in:close()
 
 for i = 1, #replacements do
-	for j = 1, #replacements[i][1] do
-    	content, _ = content:gsub(replacements[i][1][j], replacements[i][2])
-	end
+    for j = 1, #replacements[i][1] do
+        content, _ = content:gsub(replacements[i][1][j], replacements[i][2])
+    end
 end
 
 if arg[2] == "stdout" then
