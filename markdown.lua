@@ -1,7 +1,7 @@
 --[[
-    Convert simple markdown to HTML
+    An opinionated markdown to html converter
 
-    Usage:
+    usage:
         markdown.lua <file_to_convert> <file_to_output>
 
         if <file_to_output> is "stdout" it will print to console
@@ -14,50 +14,45 @@ if #arg < 2 then
 end
 
 replacements = {
-    {"\r\n"                 , "\n"},
-
-    -- Horizontal line
-    {"\n\n(%-%-%-+%s+)"     , "\n\n<hr>\n\n"},
-    {"\n\n(___+%s+)"        , "\n\n<hr>\n\n"},
-    {"\n\n(***+%s+)"        , "\n\n<hr>\n\n"},
-
-    -- Bold and italic
-    {"___(.-)___"           , "<i><b>%1</b></i>"},
-    {"__(.-)__"             , "<b>%1</b>"},
-    {"_(.-)_"               , "<i>%1</i>"},
-
-    {"%*%*%*(.-)%*%*%*"     , "<i><b>%1</b></i>"},
-    {"%*%*(.-)%*%*"         , "<b>%1</b>"},
-    {"%*(.-)%*"             , "<i>%1</i>"},
-
-    -- Strikethrough
-    {"~~(.-)~~"             , "<strike>%1</strike>"},
+    {"\r\n"                         , "\n"},
 
     -- Heading
-    {"###### ([^\n]*)"      , "<h6>%1</h6>"},
-    {"##### ([^\n]*)"       , "<h5>%1</h5>"},
-    {"#### ([^\n]*)"        , "<h4>%1</h4>"},
-    {"### ([^\n]*)"         , "<h3>%1</h3>"},
-    {"## ([^\n]*)"          , "<h2>%1</h2>"},
-    {"# ([^\n]*)"           , "<h1>%1</h1>"},
-
-    {"([^\n]+)\n===+"       , "<h1>%1</h1>"},
-    {"([^\n]+)\n%-%-%-+"    , "<h2>%1</h2>"},
-
-    -- Image
-    {"!%[(.-)%]%((.-)%)"    , "<p><img src=\"%2\" alt=\"%1\"></p>"},
-
-    -- Link
-    {"%[(.-)%]%((.-)%)"     , "<p><a href=\"%2\">%1</a></p>"},
-
-    -- Codeblock
-    {"```(%w-)\n(.-)```"    , "<pre><code class=\"%1\">%2</code></pre>"},
-
-    -- In-line code
-    {"`(.-)`"               , "<code>%1</code>"},
+    {"###### ([^\n]*)"              , "<h6>%1</h6>"},
+    {"##### ([^\n]*)"               , "<h5>%1</h5>"},
+    {"#### ([^\n]*)"                , "<h4>%1</h4>"},
+    {"### ([^\n]*)"                 , "<h3>%1</h3>"},
+    {"## ([^\n]*)"                  , "<h2>%1</h2>"},
+    {"# ([^\n]*)"                   , "<h1>%1</h1>"},
 
     -- Quote
-    {"> ([^\n]-)\n"         , "<blockquote><p>%1</p></blockquote>"}
+    {"> ([^\n]*)"                   , "<p><blockquote>%1</blockquote></p>"},
+
+    -- Horizontal line
+    {"\n\n(%-%-%-%--)\n"            , "\n\n<hr>\n\n"},
+
+    -- Paragraph
+    {"\n([^<\n]+)\n"                , "\n<p>%1</p>\n"},
+
+    -- Image
+    {"!%[(.-)%]%((.-)%)"            , "<img src=\"%2\" alt=\"%1\">"},
+
+    -- Link
+    {"%[(.-)%]%((.-)%)"             , "<a href=\"%2\">%1</a>"},
+
+    -- Bold and italic
+    {"%*%*%*([^\n]-[^\n])%*%*%*"    , "<i><b>%1</b></i>"},
+    {"%*%*([^\n]-[^\n])%*%*"        , "<b>%1</b>"},
+    {"%*([^\n]-[^\n])%*"            , "<i>%1</i>"},
+    {"_([^\n]-[^\n])_"              , "<i>%1</i>"},
+
+    -- Strikethrough
+    {"~~([^\n]-[^\n])~~"            , "<strike>%1</strike>"},
+
+    -- Codeblock
+    {"```(%w-)\n(.-)```"            , "<pre><code class=\"%1\">%2</code></pre>"},
+
+    -- In-line code
+    {"`(.-)`"                       , "<code>%1</code>"},
 }
 
 file_in = io.open(arg[1], "r")
