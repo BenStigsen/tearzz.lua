@@ -51,12 +51,29 @@ replacements = {
         "<span class=\"call\">%1</span>("
     },
     {
+        -- Keywords
+        {
+            "(import )",
+            "(require )",
+            "(#include )",
+            "(#define )",
+            "(if )",
+            "(for )",
+            "(with )",
+            "(in )",
+            "(then[^\n]-)\n",
+            "(do[^\n]-)\n"
+        },
+        "<span class=\"keyword\">%1</span>"
+    },
+    {
         -- Number
         {
-            "%d%d-%.?%d%d-[^%d]",
+            "%d+%.%d+%D",
+            "[^>]%d+[^<]",
         },
         "<span class=\"number\">%0</span>"
-    }
+    },
 }
 
 file_in = io.open(arg[1], "r")
