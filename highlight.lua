@@ -53,18 +53,18 @@ replacements = {
     {
         -- Keywords
         {
-            "(import )",
-            "(require )",
-            "(#include )",
-            "(#define )",
-            "(if )",
-            "(for )",
-            "(with )",
-            "(in )",
-            "(then[^\n]-)\n",
-            "(do[^\n]-)\n"
+            "import ",
+            "require ",
+            "#include ",
+            "#define ",
+            "if ",
+            "for ",
+            "with ",
+            "in ",
+            "then[^\n]-\n",
+            "do[^\n]-\n"
         },
-        "<span class=\"keyword\">%1</span>"
+        "<span class=\"keyword\">%0</span>\n"
     },
     {
         -- Number
