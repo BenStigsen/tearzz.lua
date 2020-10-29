@@ -16,62 +16,39 @@ end
 replacements = {
     {
         -- String
-        {
-            "%b\"\"",
-            "%b''",
-        },
-        "<span class=\"string\">%0</span>"
+        {"%b\"\"", "%b''"}, "<span class=\"string\">%0</span>"
     },
     {
         -- Comment
         {
             -- Block
-            "/%*.-%*/",
-            "%-%-%[%[.-%-%-%]%]",
+            "/%*.-%*/", "%-%-%[%[.-%-%-%]%]",
 
             -- Single
-            "//[^\n]-\n",
-            "#[^\n]-\n",
-            "[^>]%-%-[^\n]-\n",
+            "//[^\n]-\n", "#[^\n]-\n", "[^>]%-%-[^\n]-\n"
         },
         "<span class=\"comment\">%0</span>"
     },
     {
         -- Function
-        {
-            "(%w+)(%s+%*?[_%w%d]-%()",
-        },
-        "<span class=\"function\">%1</span>%2"
+        {"(%w+)(%s+%*?[_%w%d]-%()"}, "<span class=\"function\">%1</span>%2"
     },
     {
         -- Functioncall
-        {
-            "(%w+)%(",
-        },
-        "<span class=\"call\">%1</span>("
+        {"(%w+)%("}, "<span class=\"call\">%1</span>("
     },
     {
         -- Keywords
         {
-            "import ",
-            "require ",
-            "#include ",
-            "#define ",
-            "if ",
-            "for ",
-            "with ",
-            "in ",
-            "then[^\n]-\n",
-            "do[^\n]-\n"
+            "%Wimport ", "^import ", "%Wrequire ", "^require", 
+            "#include ", "#define ", "%Wthen%s", "%Wdo%s", "%Wend",
+            "%Wif ", "^if", "%Wfor ", "^for", "%Wwith ", "%Win "
         },
-        "<span class=\"keyword\">%0</span>\n"
+        "<span class=\"keyword\">%0</span>"
     },
     {
         -- Number
-        {
-            "%d+%.%d+%D",
-            "[^>]%d+[^<]",
-        },
+        {"%W%d-%.%d+%D", "^%d-%.%d+%D", "[^>%w]%d%d-[^<]"},
         "<span class=\"number\">%0</span>"
     },
 }
