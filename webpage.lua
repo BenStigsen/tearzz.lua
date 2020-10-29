@@ -14,10 +14,10 @@ if #arg < 2 then
 end
 
 function file_read(filename)
-	local file_in = io.open(filename, "r")
-	local data = file_in:read("*a")
-	file_in:close()
-	return data
+    local file_in = io.open(filename, "r")
+    local data = file_in:read("*a")
+    file_in:close()
+    return data
 end
 
 replacements_markdown = {
@@ -58,7 +58,7 @@ replacements_markdown = {
     -- Code
     {"```(%w-)<.-\n(.-)```", '<pre><code class="%1">%2</code></pre>'},
     {"```(%w-)\n(.-)```", '<pre><code class="%1">%2</code></pre>'},
-	{"`(.-)`", "<code>%1</code>"}
+    {"`(.-)`", "<code>%1</code>"}
 }
 
 replacements_highlight = {
@@ -99,50 +99,50 @@ replacements_highlight = {
 }
 
 function to_pattern(content)
-	local replacements = {
-		{"%%", "%%"},  {"%.", "%%."},
-		{"%(", "%%("}, {"%)", "%%)"}, {"%[", "%%["}, {"%]", "%%]"},
-		{"%+", "%%+"}, {"%-", "%%-"}, {"%*", "%%*"}, {"%?", "%%?"}
-	}
-	for i = 1, #replacements do 
-		content = content:gsub(replacements[i][1], replacements[i][2]) 
-	end
-	return content
+    local replacements = {
+        {"%%", "%%"},  {"%.", "%%."},
+        {"%(", "%%("}, {"%)", "%%)"}, {"%[", "%%["}, {"%]", "%%]"},
+        {"%+", "%%+"}, {"%-", "%%-"}, {"%*", "%%*"}, {"%?", "%%?"}
+    }
+    for i = 1, #replacements do 
+        content = content:gsub(replacements[i][1], replacements[i][2]) 
+    end
+    return content
 end
 
 function markdown_to_html(content)
-	for i = 1, #replacements_markdown do
-	    content, _ = content:gsub(replacements_markdown[i][1], replacements_markdown[i][2])
-	end
-	return content
+    for i = 1, #replacements_markdown do
+        content, _ = content:gsub(replacements_markdown[i][1], replacements_markdown[i][2])
+    end
+    return content
 end
 
 function highlight_code(content)
-	for codeblock in content:gmatch("```%w-\n.-```") do
-		local new = codeblock
-		for i = 1, #replacements_highlight do
-		    for j = 1, #replacements_highlight[i][1] do
-		        new, _ = new:gsub(replacements_highlight[i][1][j], replacements_highlight[i][2])
-		    end
-		end
+    for codeblock in content:gmatch("```%w-\n.-```") do
+        local new = codeblock
+        for i = 1, #replacements_highlight do
+            for j = 1, #replacements_highlight[i][1] do
+                new, _ = new:gsub(replacements_highlight[i][1][j], replacements_highlight[i][2])
+            end
+        end
 
-		content, _ = content:gsub(to_pattern(codeblock), new)
-	end
+        content, _ = content:gsub(to_pattern(codeblock), new)
+    end
 
-	return content
+    return content
 end
 
 html = file_read(arg[1])
 
 while true do
-	filename = html:match('%[> merge file: "([^"]-)" <%]')
-	if not filename or filename == "" then break end
+    filename = html:match('%[> merge file: "([^"]-)" <%]')
+    if not filename or filename == "" then break end
 
-	markdown = file_read(filename)
-	markdown = highlight_code(markdown)
-	markdown = markdown_to_html(markdown)
+    markdown = file_read(filename)
+    markdown = highlight_code(markdown)
+    markdown = markdown_to_html(markdown)
 
-	html = html:gsub('%[> merge file: "' .. filename .. '" <%]', markdown)
+    html = html:gsub('%[> merge file: "' .. filename .. '" <%]', markdown)
 end
 
 if arg[2] == "stdout" then
