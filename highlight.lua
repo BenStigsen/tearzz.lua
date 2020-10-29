@@ -14,40 +14,37 @@ if #arg < 2 then
 end
 
 replacements = {
+    -- String
+    {{"%b\"\"", "%b''"}, "<span class=\"string\">%0</span>"},
+
+    -- Comment
     {
-        -- String
-        {"%b\"\"", "%b''"}, "<span class=\"string\">%0</span>"
-    },
-    {
-        -- Comment
         {
             -- Block
             "/%*.-%*/", "%-%-%[%[.-%-%-%]%]",
 
             -- Single
             "//[^\n]-\n", "#[^\n]-\n", "[^>]%-%-[^\n]-\n"
-        },
-        "<span class=\"comment\">%0</span>"
+        }, "<span class=\"comment\">%0</span>"
     },
+    
+    -- Function
+    {{"(%w+)(%s+%*?[_%w%d]-%()"}, "<span class=\"function\">%1</span>%2"},
+    
+    -- Functioncall
+    {{"(%w+)%("}, "<span class=\"call\">%1</span>("},
+    
+    -- Keywords
     {
-        -- Function
-        {"(%w+)(%s+%*?[_%w%d]-%()"}, "<span class=\"function\">%1</span>%2"
-    },
-    {
-        -- Functioncall
-        {"(%w+)%("}, "<span class=\"call\">%1</span>("
-    },
-    {
-        -- Keywords
         {
             "%Wimport ", "^import ", "%Wrequire ", "^require", 
             "#include ", "#define ", "%Wthen%s", "%Wdo%s", "%Wend",
             "%Wif ", "^if", "%Wfor ", "^for", "%Wwith ", "%Win "
-        },
-        "<span class=\"keyword\">%0</span>"
+        }, "<span class=\"keyword\">%0</span>"
     },
+    
+    -- Number
     {
-        -- Number
         {"%W%d-%.%d+%D", "^%d-%.%d+%D", "[^>%w]%d%d-[^<]"},
         "<span class=\"number\">%0</span>"
     },
