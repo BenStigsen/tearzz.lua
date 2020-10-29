@@ -8,14 +8,14 @@
         if <file_to_output> is "stdout" it will print to console
 
     example:
-    	file.txt contains:
-			'Hello [> merge file: "test.txt" <]'
-		
-		test.txt contains:
-			'World'
+        file.txt contains:
+            'Hello [> merge file: "test.txt" <]'
+        
+        test.txt contains:
+            'World'
 
-		then <file_to_output> would contain:
-			'Hello World'
+        then <file_to_output> would contain:
+            'Hello World'
 --]]
 
 if #arg < 2 then
@@ -25,25 +25,25 @@ if #arg < 2 then
 end
 
 function file_read(filename)
-	local file_in = io.open(filename, "r")
-	local data = file_in:read("*a")
-	file_in:close()
-	return data
+    local file_in = io.open(filename, "r")
+    local data = file_in:read("*a")
+    file_in:close()
+    return data
 end
 
 content = file_read(arg[1])
 
 while true do
-	filename = content:match('%[> merge file: "([^"]-)" <%]')
-	if not filename or filename == "" then break end
+    filename = content:match('%[> merge file: "([^"]-)" <%]')
+    if not filename or filename == "" then break end
 
-	content = content:gsub('%[> merge file: "' .. filename .. '" <%]', file_read(filename))
+    content = content:gsub('%[> merge file: "' .. filename .. '" <%]', file_read(filename))
 end
 
 if arg[2] == "stdout" then
-	print(content)
+    print(content)
 else
-	file_out = io.open(arg[2], "w")
-	file_out:write(content)
-	file_out:close()
+    file_out = io.open(arg[2], "w")
+    file_out:write(content)
+    file_out:close()
 end
