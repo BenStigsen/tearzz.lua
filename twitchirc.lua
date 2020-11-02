@@ -1,14 +1,16 @@
 --[[
     a minimal twitch chatbot
 
-    usage:
-        twitchirc.lua [<credentials.lua>] [<oauth> <channel> <botname>]
+    to-do:
+        add global / chat ban protection
+        add function command calling
 
-        if <credentials_file> is listed
-        then the other 3 arguments are not necessary
+    usage (2 different ways):
+        twitchirc.lua <credentials.lua>
+        twitchirc.lua <oauth> <channel> <botname>
 
     credentials.lua:
-        (Everything should be lowercase!!)
+        (everything should be lowercase!!)
         if you are going to use a credentials file make it contain:
             oauth = "oauth:your-long-oauth-token-here"
             channel = "the_channel_to_join"
