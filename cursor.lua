@@ -22,8 +22,7 @@ os.execute("")
 cursor = {x = 0, y = 0}
 
 cursor.set = function (cursor, _x, _y)
-    cursor.x = _x
-    cursor.y = _y
+    cursor = {x = _x, y = _y}
     io.write(("\27[%dC\27[%dB"):format(_x, _y))
     io.flush()
 end
