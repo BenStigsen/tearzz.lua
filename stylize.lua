@@ -1,8 +1,8 @@
 --[[
-    a minimal coloring module
+    a minimal terminal text styling module
 
     usage:
-        require("coloro")
+        require("stylize")
 
         ("Hello World"):stylize("red", "bold", "underline", etc)
 
