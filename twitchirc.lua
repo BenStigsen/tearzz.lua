@@ -37,6 +37,9 @@ irc = socket.tcp()
 -- This enables console color support on Windows (for some reason)
 os.execute("")
 
+-- Custom command prefix (make it pattern compatible)
+prefix = "!"
+
 -- Custom defined variables
 replacements = {['||channel||'] = channel}
 
@@ -123,7 +126,7 @@ function process(line)
 
     --if #messages > 5 then messages:remove(1) end
 
-    local command = message:match("(%w+)")
+    local command = message:match(prefix .. "(%w+)")
     
     if commands[command] then
         print(("%s %s: %s"):format(("[RECVCMD]"):stylize("yellow"), user:stylize("underline"), message))
