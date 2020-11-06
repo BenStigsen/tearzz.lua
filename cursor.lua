@@ -46,7 +46,7 @@ cursor.move = function (cursor, _x, _y)
 
     if _y < 0 then 
         io.write(("\27[%dA"):format(_y)) 
-    elseif _x > 0 then 
+    elseif _y > 0 then 
         io.write(("\27[%dB"):format(_y)) 
     end
 
