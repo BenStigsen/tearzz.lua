@@ -1,10 +1,6 @@
 --[[
     a minimal twitch chatbot
 
-    to-do:
-        add global / chat ban protection
-        add function command calling
-
     usage (2 different ways):
         twitchirc.lua <credentials.lua>
         twitchirc.lua <oauth> <channel> <botname>
@@ -48,9 +44,6 @@ commands = {
     ['test'] = '||user|| just typed "||msg||" in channel ||channel||!'
 --  ['command'] = 'some response here!'
 }
-
--- Queue of messages to send
---messages = {} 
 
 -- Console text formatting
 style = {
@@ -110,7 +103,6 @@ function update()
     while true do
         local line = irc:receive()
         if line then
-            --print(line)
             if line:match("(%w+)") == "PING" then
                 print(("%s %s"):format(("[RECVIRC]"):stylize("magenta", "bright"), line))
                 irc_send_raw("PONG")
