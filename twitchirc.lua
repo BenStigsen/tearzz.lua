@@ -64,6 +64,9 @@ style = {
     ["bright"] = "\27[1m", ["underline"] = "\27[4m", ["reversed"] = "\27[7m"
 }
 
+-- Timer for global ban protection
+time = os.time()
+
 -- Color output / text formatting
 string.stylize = function (msg, ...)
     local arg = {...}
@@ -122,19 +125,20 @@ end
 function process(line)
     local user = line:match(":(.-)!")
     local message = line:match(("PRIVMSG #%s :(.+)"):format(channel))
-    --table.insert(messages, #messages + 1, message)
-
-    --if #messages > 5 then messages:remove(1) end
-
     local command = message:match(prefix .. "(%w+)")
     
     if commands[command] then
         print(("%s %s: %s"):format(("[RECVCMD]"):stylize("yellow"), user:stylize("underline"), message))
-        local msg = commands[command]
-        for k, v in pairs(replacements) do msg = msg:gsub(k, v) end
-        msg = msg:gsub("||user||", user):gsub("||msg||", message)
+        
+        -- Global ban protection (max of 1 msg/sec)
+        if (os.time() - time) >= 1 then
+            time = os.time()
+            local msg = commands[command]
+            for k, v in pairs(replacements) do msg = msg:gsub(k, v) end
+            msg = msg:gsub("||user||", user):gsub("||msg||", message)
 
-        irc_send_msg(msg)
+            irc_send_msg(msg)
+        end
     else
         print(("%s %s: %s"):format(("[RECVMSG]"):stylize("green", "bright"), user:stylize("underline"), message))
     end
