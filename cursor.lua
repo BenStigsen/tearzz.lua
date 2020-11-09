@@ -1,9 +1,6 @@
 --[[
     a minimal cursor module
 
-    to-do:
-        cursor:print_at(<x>, <y>, <text>) should be independent
-
     usage:
         require("cursor")
 
@@ -71,9 +68,37 @@ cursor.print = function (cursor, msg)
     return cursor
 end
 
-cursor.print_at = function (cursor, x, y, msg)
+cursor.print_at = function (cursor, _x, _y, msg)
     local length = msg:len()
-    local _x, _y = cursor.x, cursor.y
 
-    return cursor:set(x, y):print(msg):set(_x, _y)
+    if _x < cursor.x then
+        io.write(("\27[%dD"):format(cursor.x - _x))
+    elseif _x > cursor.x then 
+        io.write(("\27[%dC"):format(_x - cursor.x))
+    end
+
+    if _y < cursor.y then 
+        io.write(("\27[%dA"):format(cursor.y - _y)) 
+    elseif _y > cursor.y then 
+        io.write(("\27[%dB"):format(_y - cursor.y)) 
+    end
+
+    io.write(msg)
+    _x = _x + length
+
+    if _x > cursor.x then
+        io.write(("\27[%dD"):format(_x - cursor.x))
+    elseif _x < cursor.x then
+        io.write(("\27[%dC"):format(cursor.x - _x))
+    end
+
+    if _y > cursor.y then
+        io.write(("\27[%dA"):format(_y - cursor.y)) 
+    elseif _y < cursor.y then 
+        io.write(("\27[%dB"):format(cursor.y - _y)) 
+    end
+
+    io.flush()
+
+    return cursor
 end
