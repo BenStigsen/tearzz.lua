@@ -1,5 +1,8 @@
 --[[
     a minimal terminal text styling module
+    
+    to-do:
+        add more colors and styles (https://en.wikipedia.org/wiki/ANSI_escape_code)
 
     usage:
         require("stylize")
