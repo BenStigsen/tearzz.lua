@@ -1,5 +1,5 @@
 --[[
-    An opinionated markdown to html converter
+    an opinionated markdown to html converter
 
     usage:
         markdown.lua <file_to_convert> <file_to_output>
@@ -28,7 +28,7 @@ replacements = {
     {"> ([^\n]*)"                   , "<p><blockquote>%1</blockquote></p>"},
 
     -- Horizontal line
-    {"\n\n(%-%-%-%--)\n"            , "\n\n<hr>\n\n"},
+    {"\n\n(%-%-%-%--)\n"            , "\n\n<hr>\n"},
 
     -- Paragraph
     {"\n([^<\n]+)\n"                , "\n<p>%1</p>\n"},
