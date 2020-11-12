@@ -2,7 +2,7 @@
     a minimal cursor module
 
     to-do:
-        add cursor:get_pos()
+        add get_position()
         add get_dimensions()
 
     usage:
