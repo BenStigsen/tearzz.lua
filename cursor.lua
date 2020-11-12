@@ -3,6 +3,7 @@
 
     to-do:
         add cursor:get_pos()
+        add get_dimensions()
 
     usage:
         require("cursor")
@@ -57,9 +58,9 @@ cursor.reset = function (cursor)
 end
 
 cursor.print = function (cursor, msg)
-    local length = msg:len()
-    
-    io.write(("%s\27[%dD"):format(msg, length))
+    msg = msg:gsub("\n", ("\n\027[%dC"):format(cursor.x))
+
+    io.write(msg)
     io.flush()
     
     return cursor
