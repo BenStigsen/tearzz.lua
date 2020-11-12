@@ -3,7 +3,6 @@
 
     to-do:
         add cursor:get_pos()
-        make top-left cornor x = 0, y = 0
 
     usage:
         require("cursor")
