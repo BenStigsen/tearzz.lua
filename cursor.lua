@@ -1,6 +1,10 @@
 --[[
     a minimal cursor module
 
+    to-do:
+        add cursor:get_pos()
+        make top-left cornor x = 0, y = 0
+
     usage:
         require("cursor")
 
@@ -17,19 +21,9 @@ os.execute("")
 cursor = {x = 0, y = 0}
 
 cursor.set = function (cursor, _x, _y)
-    if _x > 0 then 
-        io.write(("\27[%dD\27[%dC"):format(cursor.x, _x))
-    else
-        io.write(("\27[%dD"):format(cursor.x))
-    end
-
-    if _y > 0 then 
-        io.write(("\27[%dA\27[%dB"):format(cursor.y, _y))
-    else
-        io.write(("\27[%dA"):format(cursor.y))
-    end
-
+    io.write(("\27[%d;%dH"):format(_y + 1, _x + 1))
     io.flush()
+
     cursor.x, cursor.y = _x, _y
     return cursor
 end
