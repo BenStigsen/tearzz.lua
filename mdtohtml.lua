@@ -2,14 +2,14 @@
     an opinionated markdown to html converter
 
     usage:
-        markdown.lua <file_to_convert> <file_to_output>
+        mdtohtml.lua <file_to_convert> <file_to_output>
 
         if <file_to_output> is "stdout" it will print to console
 --]]
 
 if #arg < 2 then
     print("You need to supply two arguments")
-    print("markdown.lua <file_to_convert> <file_to_output>")
+    print("mdtohtml.lua <file_to_convert> <file_to_output>")
     os.exit(1)
 end
 
